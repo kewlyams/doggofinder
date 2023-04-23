@@ -3,7 +3,7 @@
     import { auth } from '../utilities/auth';
     
     let name: string;
-    let email:string;
+    let email: string;
     
     const login = () => {
         return auth()
@@ -44,50 +44,50 @@
         </div>
     </form>
     
-    <style>
+<style>
     
-        .loginForm {
-            display: inline-block;
-            margin-top: 15em;
-            border: .4em solid rgb(223, 234, 255);
-            border-radius: 2%;
-            height: 30em;
-            width: 22em;
+    .loginForm {
+        display: inline-block;
+        margin-top: 15em;
+        border: .4em solid rgb(223, 234, 255);
+        border-radius: 2%;
+        height: 30em;
+        width: 22em;
             
-        }
+    }
     
-        .inputField {
-            margin: 2em;
-        }
+    .inputField {
+        margin: 2em;
+    }
     
-        h3 {
-            font-size: 1.8em;
-            margin-top: 1.5em;
-            margin-left: 1em;
-            margin-bottom: 2em;
-        }
+    h3 {
+        font-size: 1.8em;
+        margin-top: 1.5em;
+        margin-left: 1em;
+        margin-bottom: 2em;
+    }
     
-        input {
-            display: block;
-            width: 20em;
-            height: 3em;
-        }
+    input {
+        display: block;
+        width: 20em;
+        height: 3em;
+    }
     
-        button {
-            height:3em;
-            width: 10em;
-            background-color: rgb(175, 201, 250);
-            border-radius: 3%;
-            font-weight: bold;
-            border: none;
-            margin:0 auto;
-            margin-top: 5em;
-            margin-bottom: 5em;
-            display:block;
-        }
+    button {
+        height:3em;
+        width: 10em;
+        background-color: rgb(175, 201, 250);
+        border-radius: 3%;
+        font-weight: bold;
+        border: none;
+        margin:0 auto;
+        margin-top: 5em;
+        margin-bottom: 5em;
+        display:block;
+    }
     
-        button:hover {
-            background-color:rgb(147, 181, 243);
-        }
+    button:hover {
+        background-color:rgb(147, 181, 243);
+    }
     
-    </style>
+</style>

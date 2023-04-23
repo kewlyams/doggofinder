@@ -2,9 +2,7 @@
     import { goto } from '$app/navigation';
     import { auth } from '../utilities/auth';
 
-
     const logout = () => {
-    
         return auth()
         .post("/auth/logout")
         .then((res) => {
@@ -15,7 +13,6 @@
         .catch((error) => {
             console.log(error);
         });
-
     }
     
 </script>
