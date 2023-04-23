@@ -209,7 +209,7 @@
         </form>
         <div class="breed-items">
             {#each user_zip_codes as zip (zip)}
-                <button class="delete" on:click={() => removeZip(zip)}>x {zip}</button>
+                <button class="delete-btn" on:click={() => removeZip(zip)}>x {zip}</button>
             {/each}
         </div>
 

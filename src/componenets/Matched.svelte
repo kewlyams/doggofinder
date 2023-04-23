@@ -34,6 +34,7 @@
         object-fit: cover;
         width: 450px;
         height: 450px;
+        border-radius: 5%;
     }
 
     #name {
