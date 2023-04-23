@@ -10,7 +10,8 @@
     export let doggos: Doggo[] = [];
 
     let matched_doggo: Doggo;
-    let list_of_favorites: string[] = [];
+    let list_of_favorites: Doggo[] = [];
+
     $: matched = 0;
 
     let favorite_display = {
@@ -21,11 +22,11 @@
     const matchDog = () => {
         if(list_of_favorites.length > 0){
             return auth()
-            .post("/dogs/match", list_of_favorites)
+            .post("/dogs/match", list_of_favorites.map((dog) => dog.id))
             .then((res) => {
                 if(res.status = 200){
                     matched = 1;
-                    matched_doggo = doggos.find(t => t.id == res.data.match) as Doggo;
+                    matched_doggo = list_of_favorites.find(t => t.id == res.data.match) as Doggo;
                 }
             })
             .catch((error) => {
@@ -38,11 +39,11 @@
     }
 
     const addFavorite = (dog: Doggo) => {
-        list_of_favorites = [...list_of_favorites, dog.id];
+        list_of_favorites = [...list_of_favorites, dog];
     }
 
     const removeFavorite = (dog: Doggo) => {
-        list_of_favorites = list_of_favorites.filter(t => t != dog.id)
+        list_of_favorites = list_of_favorites.filter(t => t != dog)
     }
 
 </script>
@@ -59,7 +60,7 @@
                     <p id="age"><b>Age: </b>{dog.age}</p>
                     <p id="zip"><b>Zipcode: </b>{dog.zip_code}</p>
                 </div>
-                {#if list_of_favorites.includes(dog.id)}
+                {#if list_of_favorites.includes(dog)}
                     <button class="favorite-btn" on:click={() => removeFavorite(dog)}>{favorite_display.remove}</button>
                 {:else}
                     <button class="favorite-btn" on:click={() => addFavorite(dog)}>{favorite_display.add}</button>
