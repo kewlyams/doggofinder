@@ -104,7 +104,6 @@
         margin-left: 17em;
         width: 80em;
         height: 70em;
-
     }
 
     .retry-btn {

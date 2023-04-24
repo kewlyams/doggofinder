@@ -1,13 +1,19 @@
 <script lang="ts">
-    import { auth } from "../utilities/auth";
+    import { breedSearch } from "../utilities/breedSearch"
     import { onMount } from "svelte";
-    import { goto } from "$app/navigation";
 
     import type { Doggo } from "../lib/Doggo";
     import type { QueryParams } from "../lib/QueryParams";
     import type { Sort } from "../lib/Sort";
 
     import Dogs from "./Dogs.svelte";
+    import { dogSearch } from "../utilities/dogSearch";
+    import { dogSearchById } from "../utilities/dogSearchById"
+    import SortDogs from "./SortDogs.svelte";
+    import SortAge from "./SortAge.svelte";
+    import SortZip from "./SortZip.svelte";
+    import SortBreed from "./SortBreed.svelte";
+    import Navigation from "./Navigation.svelte";
 
     let home_page: HTMLDivElement;
 
@@ -47,63 +53,28 @@
     }
 
     onMount(async () => {
-        dogSearch();
-        getDogBreeds();
+        getDogs();
+        getDogsById();
+        getBreeds();
 	});
 
-    const dogSearch = () => {
-        return auth()
-        .get("/dogs/search", 
-            {params: query_params,})
-        .then((res) => {
-            if(res.status = 200){
-                ids = res.data.resultIds
-                query_total = res.data.total
-                getDogsById();
-            }
+    const getDogs = () => {
+        dogSearch(query_params).then((data) => {
+            ids = data.resultIds
+            query_total = data.total
+            getDogsById();
         })
-        .catch((error) => {
-            console.log(error)
-            if (error.status = 401){
-                goto("/");
-            }
-        });
     }
 
     const getDogsById = () => {
-        return auth()
-        .post("/dogs", ids)
-        .then((res) => {
-            if(res.status = 200){
-                dogs = res.data;
-                return {
-                    props: {
-                    dogs,
-                    }
-                }
-            }
+        dogSearchById(ids).then((data) => {
+            dogs = data;
         })
-        .catch((error) => {
-            console.log(error)
-            if (error.status = 401){
-                goto("/");
-            }
-        });
     }
 
-    const getDogBreeds = () => {
-        return auth()
-        .get("/dogs/breeds")
-        .then((res) => {
-            if(res.status = 200){
-                list_of_all_breeds = res.data;
-            }
-        })
-        .catch((error) => {
-            console.log(error)
-            if (error.status = 401){
-                goto("/");
-            }
+    const getBreeds = () => {
+        breedSearch().then((list:string[]) => {
+            list_of_all_breeds = list;
         });
     }
 
@@ -113,7 +84,7 @@
             user_breeds = [...user_breeds, selected_breed];
             query_params.breeds = user_breeds;
 
-            dogSearch();
+            getDogs();
         }
         selected_breed = "";
     }
@@ -122,7 +93,7 @@
         user_breeds= user_breeds.filter(t => t != removed_breed)
         query_params.breeds = user_breeds;
 
-        dogSearch();
+        getDogs();
     }
 
     const addZip = () => {
@@ -130,7 +101,7 @@
             user_zip_codes = [...user_zip_codes, selected_zip];
             query_params.zipCodes = user_zip_codes;
 
-            dogSearch();
+            getDogs();
         }
         selected_zip = "";
     }
@@ -139,20 +110,20 @@
         user_zip_codes= user_zip_codes.filter(t => t != removed_zip)
         query_params.zipCodes = user_zip_codes;
 
-        dogSearch();
+        getDogs();
     }
 
-    const submitSort = () => {
-        query_params.sort = selected;
+    // const submitSort = () => {
+    //     query_params.sort = selected;
 
-        dogSearch();
-    }
+    //     getDogs();
+    // }
 
     const submitAge = () => {
         query_params.ageMin = selected_age_min;
         query_params.ageMax = selected_age_max;
 
-        dogSearch();
+        getDogs();
     }
 
     const goNextPage = () => {
@@ -160,7 +131,7 @@
             query_params.from = query_params.from + 29
             current_page++;
 
-            dogSearch();
+            getDogs();
         }
         home_page.scrollIntoView();
     }
@@ -169,78 +140,29 @@
         if(current_page > 1){
             query_params.from = query_params.from - 29
             current_page--;
-            home_page.scrollIntoView();
 
-            dogSearch();
+            getDogs();
         }
+        home_page.scrollIntoView();
     }
 </script>
 
 <div class="home-page" bind:this={home_page}>
     <div class="search-options">
-        <div class="feature">
-            <form on:change={submitSort}>
-                    <label class="feature-label" for="sort-by">Sort by:</label>
-                    <select class="user-input" id="sort-by" bind:value={selected}>
-                        {#each list_of_sorts as sort (sort)}
-                             <option value={sort.query}>
-                                {sort.name}
-                            </option>
-                        {/each}
-                    </select>
-            </form>
-        </div>
 
-        <div class="feature">
-            <form on:change={submitAge}>
-                    <label class="feature-label" for="age-min">Min Age</label>
-                    <input class="user-input" id="age-min" type="text" bind:value={selected_age_min}>
+        <SortDogs getDogs={getDogs} bind:selected={selected} bind:query_params={query_params} list_of_sorts={list_of_sorts}></SortDogs>
 
-                    <label class="feature-label" for="age-max">Max Age</label>
-                    <input class="user-input"id="age-max" type="text" bind:value={selected_age_max}>
-            </form>
-        </div>
+        <SortAge submitAge={submitAge} bind:selected_age_min={selected_age_min} bind:selected_age_max={selected_age_max}></SortAge>
 
-        <form on:change|preventDefault={addZip}>
-            <div class="feature">
-                <label class="feature-label" for="zip">Zipcode</label>
-                <input class="user-input" type="text" id="zip" bind:value={selected_zip}/>
-            </div>
-        </form>
-        <div class="breed-items">
-            {#each user_zip_codes as zip (zip)}
-                <button class="delete-btn" on:click={() => removeZip(zip)}>x {zip}</button>
-            {/each}
-        </div>
+        <SortZip addZip={addZip} removeZip={removeZip} bind:selected_zip={selected_zip} bind:user_zip_codes={user_zip_codes}></SortZip>
 
-        <form on:change|preventDefault={addBreed}>
-
-            <div class="feature">
-                <label class="feature-label" for="breed">Add breeds to search for</label>
-                <input class="user-input" list="breeds" type="text" id="breed" bind:value={selected_breed}/>
-                <datalist id="breeds">
-                    {#each list_of_all_breeds as breed}
-                        <option value="{breed}">
-                    {/each}
-                  </datalist>
-            </div>
-        </form>
-
-        <div class="breed-items">
-            {#each user_breeds as breed (breed)}
-                <button class="delete-btn" on:click={() => removeBreed(breed)}>x {breed}</button>
-            {/each}
-        </div>
+        <SortBreed addBreed={addBreed} removeBreed={removeBreed} bind:selected_breed={selected_breed} bind:user_breeds={user_breeds} list_of_all_breeds={list_of_all_breeds}></SortBreed>
 
     </div>
 
     <Dogs doggos={dogs}></Dogs>
 
-    <div class="navigation">
-        <button on:click={goPrevPage}>Prev Page</button>
-        <p>{current_page}</p>
-        <button on:click={goNextPage}>Next Page</button>
-    </div>
+    <Navigation goNextPage={goNextPage} goPrevPage={goPrevPage} current_page={current_page}></Navigation>
 
 </div>
 
@@ -261,80 +183,5 @@
         padding: 0;
         left:0;
         top: 5em;
-    }
-
-    .feature {
-        margin-left:1.5em;
-        margin-top: 2em;
-        width: 15em;
-    }
-
-    .feature-label {
-        display: block;
-        color: rgb(128, 128, 128);
-        padding-top:.5em;
-    }
-
-    .user-input {
-        border: 1px solid silver;
-        display: block;
-        margin-top: .5em;
-        width: 12em;
-        height: 2em;
-    }
-
-    .breed-items {
-        display: flex;
-        flex-wrap: wrap;
-        width: 15em;
-        text-align: center;
-        margin-left: 1.7em;
-    }
-
-    .delete-btn{
-        background-color: rgb(238, 238, 238);
-        border-radius: 20%;
-        margin-top: 1em;
-        margin-right: 1em;
-        border: none;
-        height: 2em;
-        width: auto;
-    }
-
-    .delete-btn:hover {
-        background-color: rgb(223, 223, 223);
-    }
-
-    .delete-btn::first-letter {
-        font-weight: bold ;
-        margin-right:1em;
-    }
-
-    .navigation {
-        float: right;
-        clear: right;
-        margin-top: 2em;
-        margin-bottom: 3em;
-        margin-right: 2em;
-    }
-
-    .navigation button {
-        display: inline-block;
-        background-color: white;
-        border-radius: 10%;
-        border:none;
-        width: 6em;
-        height:3em;
-        box-shadow: rgba(100, 100, 111, 0.2) 0px 0px 29px 0px;
-    }
-
-    .navigation button:hover {
-        box-shadow: rgba(39, 39, 39, 0.24) 0px 3px 8px;
-    }
-
-    .navigation p {
-        display: inline-block;
-        margin: 1em;
-        font-weight: bold;
     }
 </style>
