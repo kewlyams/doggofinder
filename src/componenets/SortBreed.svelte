@@ -1,9 +1,30 @@
 <script lang="ts">
-    export let addBreed: () => void;
-    export let removeBreed: (breed: string) => void;
+    import type { QueryParams } from "$lib/QueryParams";
+
+    export let getDogs: () => void;
+    export let query_params: QueryParams;
     export let selected_breed: string;
     export let list_of_all_breeds: string[];
     export let user_breeds: string[];
+
+    const addBreed = () => {
+
+        if(!user_breeds.includes(selected_breed)){
+            user_breeds = [...user_breeds, selected_breed];
+            query_params.breeds = user_breeds;
+
+            getDogs();
+        }
+        selected_breed = "";
+    }
+
+    const removeBreed = (removed_breed: string) => {
+        user_breeds= user_breeds.filter(t => t != removed_breed)
+        query_params.breeds = user_breeds;
+
+        getDogs();
+    }
+
 </script>
 
 <form on:change|preventDefault={addBreed}>

@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
     import { breedSearch } from "../utilities/breedSearch"
     import { onMount } from "svelte";
 
@@ -78,73 +78,6 @@
         });
     }
 
-    const addBreed = () => {
-
-        if(!user_breeds.includes(selected_breed)){
-            user_breeds = [...user_breeds, selected_breed];
-            query_params.breeds = user_breeds;
-
-            getDogs();
-        }
-        selected_breed = "";
-    }
-
-    const removeBreed = (removed_breed: string) => {
-        user_breeds= user_breeds.filter(t => t != removed_breed)
-        query_params.breeds = user_breeds;
-
-        getDogs();
-    }
-
-    const addZip = () => {
-        if(!user_zip_codes.includes(selected_zip)){
-            user_zip_codes = [...user_zip_codes, selected_zip];
-            query_params.zipCodes = user_zip_codes;
-
-            getDogs();
-        }
-        selected_zip = "";
-    }
-
-    const removeZip = (removed_zip: string) => {
-        user_zip_codes= user_zip_codes.filter(t => t != removed_zip)
-        query_params.zipCodes = user_zip_codes;
-
-        getDogs();
-    }
-
-    // const submitSort = () => {
-    //     query_params.sort = selected;
-
-    //     getDogs();
-    // }
-
-    const submitAge = () => {
-        query_params.ageMin = selected_age_min;
-        query_params.ageMax = selected_age_max;
-
-        getDogs();
-    }
-
-    const goNextPage = () => {
-        if(0 < query_total - query_params.from) {
-            query_params.from = query_params.from + 29
-            current_page++;
-
-            getDogs();
-        }
-        home_page.scrollIntoView();
-    }
-
-    const goPrevPage = () => {
-        if(current_page > 1){
-            query_params.from = query_params.from - 29
-            current_page--;
-
-            getDogs();
-        }
-        home_page.scrollIntoView();
-    }
 </script>
 
 <div class="home-page" bind:this={home_page}>
@@ -152,17 +85,17 @@
 
         <SortDogs getDogs={getDogs} bind:selected={selected} bind:query_params={query_params} list_of_sorts={list_of_sorts}></SortDogs>
 
-        <SortAge submitAge={submitAge} bind:selected_age_min={selected_age_min} bind:selected_age_max={selected_age_max}></SortAge>
+        <SortAge getDogs={getDogs} bind:query_params={query_params} bind:selected_age_min={selected_age_min} bind:selected_age_max={selected_age_max}></SortAge>
 
-        <SortZip addZip={addZip} removeZip={removeZip} bind:selected_zip={selected_zip} bind:user_zip_codes={user_zip_codes}></SortZip>
+        <SortZip getDogs={getDogs} bind:query_params={query_params} bind:selected_zip={selected_zip} bind:user_zip_codes={user_zip_codes}></SortZip>
 
-        <SortBreed addBreed={addBreed} removeBreed={removeBreed} bind:selected_breed={selected_breed} bind:user_breeds={user_breeds} list_of_all_breeds={list_of_all_breeds}></SortBreed>
+        <SortBreed getDogs={getDogs} bind:query_params={query_params} bind:selected_breed={selected_breed} bind:user_breeds={user_breeds} list_of_all_breeds={list_of_all_breeds}></SortBreed>
 
     </div>
 
     <Dogs doggos={dogs}></Dogs>
 
-    <Navigation goNextPage={goNextPage} goPrevPage={goPrevPage} current_page={current_page}></Navigation>
+    <Navigation getDogs={getDogs} bind:query_params={query_params} query_total={query_total} home_page={home_page} current_page={current_page}></Navigation>
 
 </div>
 
@@ -184,4 +117,4 @@
         left:0;
         top: 5em;
     }
-</style>
+</style> -->

@@ -1,7 +1,31 @@
 <script lang="ts">
-    export let goNextPage: () => void;
-    export let goPrevPage: () => void;
+    import type { QueryParams } from "$lib/QueryParams";
+
+    export let getDogs: () => void;
+    export let query_params: QueryParams;
+    export let query_total: number;
+    export let home_page: HTMLDivElement;
     export let current_page: number;
+
+    const goNextPage = () => {
+        if(0 < query_total - query_params.from) {
+            query_params.from = query_params.from + 29
+            current_page++;
+
+            getDogs();
+        }
+        home_page.scrollIntoView();
+    }
+
+    const goPrevPage = () => {
+        if(current_page > 1){
+            query_params.from = query_params.from - 29
+            current_page--;
+
+            getDogs();
+        }
+        home_page.scrollIntoView();
+    }
 </script>
 
 

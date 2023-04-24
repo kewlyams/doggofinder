@@ -1,11 +1,11 @@
 
 <script lang="ts">
-    import { auth } from "../utilities/auth";
-    import { goto } from "$app/navigation";
+    import { getMatchedDog } from "../utilities/matchDog";
+    
+    import type { Doggo } from "../lib/Doggo";
 
     import Matched from "./Matched.svelte";
-
-    import type { Doggo } from "../lib/Doggo";
+    import Dog from "./Dog.svelte";
 
     export let doggos: Doggo[] = [];
 
@@ -21,20 +21,10 @@
 
     const matchDog = () => {
         if(list_of_favorites.length > 0){
-            return auth()
-            .post("/dogs/match", list_of_favorites.map((dog) => dog.id))
-            .then((res) => {
-                if(res.status = 200){
-                    matched = 1;
-                    matched_doggo = list_of_favorites.find(t => t.id == res.data.match) as Doggo;
-                }
+            getMatchedDog(list_of_favorites).then((data) => {
+                matched = 1;
+                matched_doggo = list_of_favorites.find(t => t.id == data.match) as Doggo;
             })
-            .catch((error) => {
-                console.log(error)
-                if (error.status = 401){
-                    goto("/");
-                }
-            });
         }
     }
 
@@ -55,10 +45,7 @@
             <div class="dog">
                 <img alt="picture of a {dog.breed}" class="card-img" src={dog.img}>
                 <div class="dog-info" >
-                    <p id="name">{dog.name}</p>
-                    <p id="breed">{dog.breed}</p>
-                    <p id="age"><b>Age: </b>{dog.age}</p>
-                    <p id="zip"><b>Zipcode: </b>{dog.zip_code}</p>
+                    <Dog dog={dog}></Dog>
                 </div>
                 {#if list_of_favorites.includes(dog)}
                     <button class="favorite-btn" on:click={() => removeFavorite(dog)}>{favorite_display.remove}</button>
@@ -176,26 +163,6 @@
         margin-right: auto;
         display: block;
         border-radius: 5%;
-    }
-
-    #name {
-        font-size: larger;
-        font-weight: bold;
-        color:rgb(77, 77, 77)
-    }
-
-    #breed {
-        margin-bottom: 1.5em;
-    }
-
-    p {
-        margin: 0;
-        padding: 0;
-        color: rgb(91, 91, 91);
-    }
-
-    b {
-        font-weight: bold;
     }
 
 </style>

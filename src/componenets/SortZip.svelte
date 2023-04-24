@@ -1,8 +1,28 @@
 <script lang="ts">
-    export let addZip: () => void;
-    export let removeZip: (removed_zip: string) => void;
+    import type { QueryParams } from "$lib/QueryParams";
+
+    export let getDogs: () => void;
+    export let query_params: QueryParams;
     export let selected_zip: string;
     export let user_zip_codes: string[];
+
+    const addZip = () => {
+        if(!user_zip_codes.includes(selected_zip)){
+            user_zip_codes = [...user_zip_codes, selected_zip];
+            query_params.zipCodes = user_zip_codes;
+
+            getDogs();
+        }
+        selected_zip = "";
+    }
+
+    const removeZip = (removed_zip: string) => {
+        user_zip_codes= user_zip_codes.filter(t => t != removed_zip)
+        query_params.zipCodes = user_zip_codes;
+
+        getDogs();
+    }
+
 </script>
 
 <form on:change|preventDefault={addZip}>

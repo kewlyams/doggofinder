@@ -1,9 +1,18 @@
 <script lang="ts">
-    export let submitAge: () => void;
+    import type { QueryParams } from "$lib/QueryParams";
+
+    export let getDogs: () => void;
+    export let query_params: QueryParams
     export let selected_age_min: string;
     export let selected_age_max: string;
-</script>
 
+    const submitAge = () => {
+        query_params.ageMin = selected_age_min;
+        query_params.ageMax = selected_age_max;
+
+        getDogs();
+    }
+</script>
 
 <div class="feature">
     <form on:change={submitAge}>
