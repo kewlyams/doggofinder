@@ -97,7 +97,7 @@
 
     {#if matched == 0}
         <DogList bind:list_of_favorites={list_of_favorites} bind:matched={matched} doggos={dogs}></DogList>
-        <Navigation getDogs={getDogs} bind:query_params={query_params} query_total={query_total} home_page={home_page} current_page={current_page}></Navigation>
+        <Navigation getDogs={getDogs} bind:query_params={query_params} bind:query_total={query_total} home_page={home_page} bind:current_page={current_page}></Navigation>
     {:else}
         <div class="matched">
             <Matched matched={matched} matched_doggo={matched_doggo}></Matched>
