@@ -82,6 +82,7 @@
 
     .delete-btn::first-letter {
         font-weight: bold ;
-        margin-right:1em;
+        margin-right: 1em;
+        float: left;
     }
 </style>

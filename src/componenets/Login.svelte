@@ -1,29 +1,16 @@
 <script lang="ts">
-    import { goto } from '$app/navigation';
-    import { auth } from '../utilities/auth';
+    import { login } from '../utilities/login';
     
     let name: string;
     let email: string;
     
-    const login = () => {
-        return auth()
-        .post("/auth/login", {
-            name:name, 
-            email:email
-        })
-        .then((res) => {
-            if(res.status == 200){
-                goto("/home");
-            }
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+    const getLogin = () => {
+        login(name, email);
     }
     
 </script>
     
-    <form on:submit|preventDefault={login}>
+    <form on:submit|preventDefault={getLogin}>
         <div class="loginForm">
     
             <h3>Login</h3>

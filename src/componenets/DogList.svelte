@@ -1,17 +1,12 @@
 
 <script lang="ts">
-    import { getMatchedDog } from "../utilities/matchDog";
-    
     import type { Doggo } from "../lib/Doggo";
 
-    import Matched from "./Matched.svelte";
     import Dog from "./Dog.svelte";
 
     export let doggos: Doggo[] = [];
-
-    let matched_doggo: Doggo;
-    let list_of_favorites: Doggo[] = [];
-
+    export let list_of_favorites: Doggo[] = [];
+    export let matched: number;
     $: matched = 0;
 
     let favorite_display = {
@@ -19,35 +14,23 @@
         remove: "Remove from Favorites"
     }
 
-    const matchDog = () => {
-        if(list_of_favorites.length > 0){
-            getMatchedDog(list_of_favorites).then((data) => {
-                matched = 1;
-                matched_doggo = list_of_favorites.find(t => t.id == data.match) as Doggo;
-            })
-        }
-    }
-
     const addFavorite = (dog: Doggo) => {
         list_of_favorites = [...list_of_favorites, dog];
     }
 
     const removeFavorite = (dog: Doggo) => {
-        list_of_favorites = list_of_favorites.filter(t => t != dog)
+        list_of_favorites = list_of_favorites.filter((doggo) => doggo.id != dog.id)
     }
 
 </script>
-
-{#if matched == 0}
     <div class="dog-container">
-        <button class="match-dog" on:click={matchDog}>Match me with a dog!</button>
         {#each doggos as dog (dog)}
             <div class="dog">
                 <img alt="picture of a {dog.breed}" class="card-img" src={dog.img}>
                 <div class="dog-info" >
                     <Dog dog={dog}></Dog>
                 </div>
-                {#if list_of_favorites.includes(dog)}
+                {#if list_of_favorites.some(({id}) => id == dog.id)}
                     <button class="favorite-btn" on:click={() => removeFavorite(dog)}>{favorite_display.remove}</button>
                 {:else}
                     <button class="favorite-btn" on:click={() => addFavorite(dog)}>{favorite_display.add}</button>
@@ -55,59 +38,8 @@
             </div>
         {/each}
     </div>
-
-{:else}
-
-    <div class="matched">
-        <Matched matched_doggo={matched_doggo}></Matched>
-        <button class="retry-btn" on:click={() => matched = 0}>Retry</button>
-    </div>
-
-{/if}
-
+    
 <style>
-
-    .match-dog {
-        background-color:rgb(182, 208, 255);
-        color:rgb(68, 68, 68);
-        box-shadow: rgba(100, 100, 111, 0.2) 0px 0px 29px 0px;
-        margin-bottom: 1em;
-        margin-left: 1.5em;
-        width: 68.5em;
-        height: 2.5em;
-        border-radius: 5%;
-        border: 0;
-        font-weight: normal;
-        font-size: large;
-    }
-
-    .match-dog:hover {
-            background-color:rgb(165, 196, 255);
-            box-shadow: rgba(39, 39, 39, 0.24) 0px 3px 8px;
-    }
-
-    .matched {
-        margin-top: 8em;
-        margin-left: 17em;
-        width: 80em;
-        height: 70em;
-    }
-
-    .retry-btn {
-        background-color:rgb(182, 208, 255);
-        box-shadow: rgba(100, 100, 111, 0.2) 0px 0px 29px 0px;
-        width: 20em;
-        height: 2.5em;
-        border-radius: 10%;
-        border: 0;
-        margin-left: 35em;
-        margin-top: 2em;
-    }
-
-    .retry-btn:hover {
-        background-color:rgb(165, 196, 255);
-        box-shadow: rgba(39, 39, 39, 0.24) 0px 3px 8px;
-    }
 
     .dog-container {
         margin: 0;

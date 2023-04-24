@@ -1,23 +1,13 @@
 <script>
-    import { goto } from '$app/navigation';
-    import { auth } from '../utilities/auth';
+    import { logout } from '../utilities/logout';
 
-    const logout = () => {
-        return auth()
-        .post("/auth/logout")
-        .then((res) => {
-            if(res.status == 200){
-                goto("/");
-            }
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+    const getLogout = () => {
+        logout();
     }
-    
+
 </script>
 
-<button on:click={logout}>Logout</button>
+<button on:click={getLogout}>Logout</button>
 
 <style>
     button {

@@ -3,6 +3,9 @@
     import Dog from "./Dog.svelte";
 
     export let matched_doggo: Doggo;
+    export let matched: number;
+    $: matched = 1;
+
 </script>
 
     <div class="matched-dog">
@@ -16,23 +19,24 @@
 
     .matched-dog {
         height: 42em;
-        margin-top: 2em;
+        margin-top: 8em;
+        margin-left: 10em;
     }
 
     .matched-dog-info {
         float: right;
-        margin-right: 22em;
+        margin-right: 15em;
         margin-top: 18em;
         font-size: larger;
     }
 
     .m-dog-img {
         margin-top: 7em;
+        margin-right: 2em;
         margin-left: 12em;
         object-fit: cover;
         width: 450px;
         height: 450px;
         border-radius: 5%;
     }
-
 </style>
