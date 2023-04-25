@@ -20,23 +20,29 @@
     .matched-dog {
         height: 42em;
         margin-top: 8em;
-        margin-left: 10em;
+        margin-left: 20%;
     }
 
     .matched-dog-info {
         float: right;
-        margin-right: 15em;
+        margin-right: 30%;
         margin-top: 18em;
         font-size: larger;
     }
 
     .m-dog-img {
         margin-top: 7em;
-        margin-right: 2em;
-        margin-left: 12em;
+        margin-right: 2%;
+        margin-left: 15%;
         object-fit: cover;
         width: 450px;
         height: 450px;
         border-radius: 5%;
+    }
+
+    @media(max-width: 1400px){
+        .m-dog-img{
+            margin-left: 5%;
+        }
     }
 </style>

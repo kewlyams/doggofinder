@@ -133,7 +133,7 @@
         height: 3em;
         border-radius: 10%;
         border: 0;
-        margin-left: 50em;
+        margin-left: 50%;
     }
 
     .retry-btn:hover {
