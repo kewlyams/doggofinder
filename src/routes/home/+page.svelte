@@ -108,9 +108,14 @@
 
 <style>
 
-    .home-page {
+    /* * {
+        box-sizing: border-box;
+    } */
+
+.home-page {
         padding:0;
         margin: 0;
+        width: 100%;
     }
 
     .search-options {

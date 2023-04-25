@@ -38,16 +38,16 @@
             </div>
         {/each}
     </div>
-    
+
 <style>
 
     .dog-container {
-        margin: 0;
         display: flex;
         flex-wrap: wrap;
         margin-top: 6.5em;
-        margin-left: 17em;
-        width: 80em;
+        margin-left: 22em;
+        margin-right: 5em;
+        width: 75%;
     }
 
     .dog {
