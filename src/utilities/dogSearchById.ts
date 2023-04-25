@@ -1,9 +1,9 @@
 import { goto } from "$app/navigation";
-import { auth } from "./auth";
+import { api } from "./api";
 
 
 export const dogSearchById = (ids: string[]) => {
-    return auth()
+    return api()
     .post("/dogs", ids)
     .then((res) => {
         if(res.status = 200){

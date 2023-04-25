@@ -1,11 +1,11 @@
 import { goto } from "$app/navigation";
 import type { Doggo } from "$lib/Doggo";
-import { auth } from "./auth";
+import { api } from "./api";
 
 
 export const getMatchedDog = (list_of_favorites: Doggo[]) => {
 
-    return auth()
+    return api()
     .post("/dogs/match", list_of_favorites.map((dog) => dog.id))
     .then((res) => {
         if(res.status = 200){

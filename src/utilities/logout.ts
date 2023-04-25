@@ -1,8 +1,8 @@
 import { goto } from "$app/navigation";
-import { auth } from "./auth";
+import { api } from "./api";
 
 export const logout = () => {
-    return auth()
+    return api()
     .post("/auth/logout")
     .then((res) => {
         if(res.status == 200){

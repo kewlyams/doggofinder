@@ -1,8 +1,8 @@
 import { goto } from "$app/navigation";
-import { auth } from "./auth";
+import { api } from "./api";
 
 export const login = (name:string, email:string) => {
-    return auth()
+    return api()
     .post("/auth/login", {
         name:name, 
         email:email

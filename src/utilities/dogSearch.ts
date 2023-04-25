@@ -1,10 +1,10 @@
 import { goto } from "$app/navigation";
 import type { QueryParams } from "$lib/QueryParams";
-import { auth } from "./auth";
+import { api } from "./api";
 
 
 export const dogSearch = (query_params:QueryParams) => {
-    return auth()
+    return api()
     .get("/dogs/search", 
         {params: query_params,})
     .then((res) => {

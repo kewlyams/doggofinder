@@ -1,9 +1,9 @@
 import { goto } from "$app/navigation";
-import { auth } from "./auth";
+import { api } from "./api";
 
 export const breedSearch = () => {
 
-    return auth()
+    return api()
         .get("/dogs/breeds")
         .then((res) => {
             if(res.status = 200){
