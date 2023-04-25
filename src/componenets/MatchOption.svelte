@@ -26,7 +26,7 @@
     
     .match-options {
         position: absolute;
-        width: 15em;
+        width: 100%;
         height: 8em;
         bottom: 5em;
         left: 1.5em;
@@ -39,7 +39,7 @@
         border: none;
         border-radius: 5%;
         margin-top: 1em;
-        width: 18em;
+        width: 80%;
         height: 3em;
     }
 

@@ -41,7 +41,7 @@
         clear: right;
         margin-top: 2em;
         margin-bottom: 3em;
-        margin-right: 2em;
+        margin-right: 8em;
     }
 
     .navigation button {

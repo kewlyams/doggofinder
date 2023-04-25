@@ -45,7 +45,7 @@
         display: flex;
         flex-wrap: wrap;
         margin-top: 6.5em;
-        margin-left: 22em;
+        margin-left: 20%;
         margin-right: 5em;
         width: 75%;
     }
@@ -57,8 +57,7 @@
         height: 30em;
         width: 18em;
         text-align: center;
-        flex: 1;
-        
+        flex: 1;   
     }
     
     .dog:hover {
@@ -81,7 +80,7 @@
         border-radius: 5%;
         margin-top: 2em;
         height: 5em;
-        width: 20em;
+        width: 95%;
         text-align: center;
     }
 
@@ -95,6 +94,12 @@
         margin-right: auto;
         display: block;
         border-radius: 5%;
+    }
+
+    @media(max-width: 1100px){
+        .dog-container{
+            margin-left: 15%;
+        }
     }
 
 </style>

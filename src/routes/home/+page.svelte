@@ -108,11 +108,7 @@
 
 <style>
 
-    /* * {
-        box-sizing: border-box;
-    } */
-
-.home-page {
+    .home-page {
         padding:0;
         margin: 0;
         width: 100%;
@@ -122,7 +118,7 @@
         position: fixed;
         box-shadow: rgba(100, 100, 111, 0.2) 0px 0px 29px 0px;
         background-color: white;
-        width: 18em;
+        width: 18%;
         height: 100%;
         margin: 0;
         padding: 0;
@@ -143,5 +139,11 @@
     .retry-btn:hover {
         background-color:rgb(165, 196, 255);
         box-shadow: rgba(39, 39, 39, 0.24) 0px 3px 8px;
+    }
+
+    @media(max-width: 1100px){
+        .search-options{
+            display: none;
+        }
     }
 </style>
