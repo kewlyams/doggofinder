@@ -61,7 +61,7 @@
     .zip-items {
         display: flex;
         flex-wrap: wrap;
-        width: 15em;
+        width: 100%;
         text-align: center;
         margin-left: 1.7em;
     }
@@ -84,5 +84,12 @@
         font-weight: bold ;
         margin-right: 1em;
         float: left;
+    }
+
+    @media(max-width: 1400px){
+        .delete-btn{
+            width: 80%;
+            height: auto;
+        }
     }
 </style>
