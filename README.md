@@ -7,6 +7,8 @@ Khrystyna Yadvinska
 
 Doggofinder is a website that allows users to find a dog from a database of shelter dogs. Once users login in with a name and email, they will be able to access the collection of available dogs with paginated results. The results are a list of the dogs that display their image, name, breed, age and zip code. The results can be filtered by age, zip code and breed. By default, the dogs are sorted in alphabetically ascending order by breed. However, the results may also be sorted in alphabetically descending order by breed, alphabetically by name and numerically by age. Users can add dogs to a favorites list and once they are done, they can press the match button to find a selected dog from that list. If the match is not desired, users are able to retry and/or reset their list of favorite dogs. 
 
+https://doggofinder.vercel.app/
+
 #### Technologies used
 
 - Svelte
